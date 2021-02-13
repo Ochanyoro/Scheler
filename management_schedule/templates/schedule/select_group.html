@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}グループSelect | Group_Select {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+<style>
+  .okk {
+       width: 100%;
+       background: url("{% static 'img/group_select.jpg' %}");
+       background-size:130%;
+       background-position:0 -20%;
+  }
+
+</style>
+{% endblock %}
+
+{% block contents %}
+
+<div class="okk">
+    <div class="mb-">
+      <h5 class='display- text-success alert alert-success text-center'>グループを選択してください</h5>
+    </div>
+    <form action="{% url 'schedule:select_group' %}" method="post" name="group_form">
+        {% csrf_token %}
+        <div class="mt-5 mb-5 text-white">'</div>
+        <div class="pr-3 mr- text-right">
+        <div class="pt- text-white">.</div>
+        <div class="mt- pb-">
+        <br>
+        <div class="ml-5" style="">
+        <h5 class="">{{ checkform.as_p}}</h5>
+        </div>
+        <div class="mt-">
+        <br>
+        </div>
+          <div class="mr- text-white text-center">
+          <button class="btn btn-primary btn-sm mr-">選択</button>
+          </div>
+        </div>
+        <div class="mt-5 mb-5" style="font-size:1px">
+        </div>
+    </form>
+</div>
+{% endblock %}

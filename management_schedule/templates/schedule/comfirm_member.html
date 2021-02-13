@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load boost %}
+
+{% block title %}削除確認 | delete_comfirm {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+{% block contents %}
+<div class="container text-center mt-3">
+  <h5 class='display-5 text-danger alert alert-danger text-center w-60 mx-auto'>本当に削除しますか?</h5>
+
+    <div class="clearfix mt-5">
+        <a class="btn btn-primary " href="{% url 'schedule:nukeru_group' glist id %}">はい</a>
+        <a class="btn btn-primary " href = '{% url "schedule:display_member" glist %}'>いいえ</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% block contents %}
+    <div class="ml-3 mr-3">
+    <div class="mt-5"></div>
+    {% include 'schedule/month_with_schedule3.html' %}
+
+    <div class='container'>
+      <div class='mt-5'></div>
+      <div style='width:65%;padding-top:2%;padding-right:2%;padding-bottom:2%'>
+      <h4 class='display-4 text-primary alert alert-primary text-center'>予定表の入力</h4>
+      </div>
+      <div class='mt-3'></div>
+      {% include 'schedule/week.html' %}
+      <form action="" method="POST">
+          {{ form.non_field_errors }}
+          {% for field in form %}
+              <div class="form-group row">
+                  <label for="{{ field.id_for_label }}"
+                         class="col-sm-4 col-form-label">{{ field.label_tag }}</label>
+                  <div class="col-sm-8">
+                      {{ field }}
+                      {{ field.errors }}
+                  </div>
+              </div>
+          {% endfor %}
+          {% csrf_token %}
+          <div class="col text-center">
+          <button type="submit" class="btn btn-primary pl-3 pr-3">送信</button>
+          </div>
+          <div class="mt-5"></div>
+      </form>
+    </div>
+        </div>
+{% endblock %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+
+{% endblock %}

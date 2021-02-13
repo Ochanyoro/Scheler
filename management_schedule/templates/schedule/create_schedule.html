@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% block contents %}
+<div class="mr-1 ml-1 mt-2">
+
+<h5 class=' text-primary alert alert-primary text-center w-50 mx-auto'>予定表(作成)</h5>
+  {% include 'schedule/month_with_schedule3.html' %}
+
+    <div class='container'>
+      <div class="mt-4">
+        <h3>{{date}}</h3>
+      </div>
+      <form action="" method="POST">
+          {{ form.non_field_errors }}
+          {% for field in form %}
+              <div class="form-group row">
+                  <label for="{{ field.id_for_label }}"
+                         class="col-4 col-form-label">{{ field.label_tag }}</label>
+                  <div class="col-8">
+                      {{ field }}
+                      {{ field.errors }}
+                  </div>
+              </div>
+          {% endfor %}
+          {% csrf_token %}
+          <div class="col text-center">
+          <button type="submit" class="btn btn-primary pl-3 pr-3">送信</button>
+          </div>
+          <div class="mt-5"></div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+{% endblock %}

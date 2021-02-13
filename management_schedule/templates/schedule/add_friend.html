@@ -1,0 +1,66 @@
+{% extends 'base/base.html'%}
+{% load static %}
+{% block contents %}
+<style>
+  .o {
+       width: 100%;
+       background: url("{% static 'img/add_friend.jpg' %}");
+       background-size:130%;
+  }
+
+</style>
+
+<div class="o">
+  <div class="mb-">
+    <h5 class='display- text-secondary alert alert-secondary text-center'>友だちの追加</h5>
+  </div>
+
+<div class="mt- text-white">'</div>
+<div class="mt-"></div>
+
+    <div class='container text-right pt-3' style="padding-rigth:-0%">
+      <div class='pt-'></div>
+      {% if glist %}
+          <form action="{% url 'schedule:add_friends' glist %}" method="post">
+            {{ form.non_field_errors }}
+            {% for field in add_friend %}
+                <div class="form-group row">
+                    <label for="{{ field.id_for_label }}"
+                           class=" col-form-label" style="width:25%">{{ field.label_tag }}</label>
+                    <div class=" text-center pl-3 pt-2" style="width:70%">
+                      {{ field }}
+                        {{ field.errors }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <div class="text-center ml" style="padding-left:-50%">
+            <button type="submit" class="btn btn-primary pl-3 pr-3">送信</button>
+            <div class="mt-4"></div>
+                  </form>
+                  </div>
+      {% else %}
+      <form action="{% url 'schedule:add_friends' %}" method="post">
+      {{ form.non_field_errors }}
+      {% for field in add_friend %}
+          <div class="form-group row">
+              <label for="{{ field.id_for_label }}"
+                     class=" col-form-label" style="width:25%">{{ field.label_tag }}</label>
+              <div class=" text-center pl-3 pt-2" style="width:70%">
+                {{ field }}
+                  {{ field.errors }}
+              </div>
+          </div>
+      {% endfor %}
+      {% csrf_token %}
+      <div class="text-center ml" style="padding-left:-50%">
+      <button type="submit" class="btn btn-primary pl-3 pr-3">送信</button>
+      <div class="mt-4"></div>
+      </div>
+  </form>
+
+      {% endif %}
+    </div>
+  <div>
+</div>
+{% endblock %}

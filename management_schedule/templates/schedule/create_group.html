@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}グループcreate | Group_Create {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+<style>
+  .okk {
+       height:100%;
+       width: 100%;
+       background: url("{% static 'img/create_group.jpg' %}");
+       background-size:120%;
+       background-position:30% 30%;
+  }
+
+</style>
+{% endblock %}
+
+{% block contents %}
+
+<div class="okk">
+    <div class="mb-">
+      <h5 class='display- text-secondary alert alert-secondary text-center'>グループの作成</h5>
+    </div>
+    <form action="{% url 'schedule:create_group' %}" method="post" name="group_form">
+        {% csrf_token %}
+        <div class="mt- text-white">'</div>
+        <div class="pr-5 mr-5 text-right">
+        <div class="pt-5 text-white">.</div>
+        <div class="mt- pt-">
+        <br>
+
+        {% for group in create_group%}
+        <div class="" style="position:absolute;right:25%">
+        <h4 style=>{{group}}</h4>
+        </div>
+        {% endfor %}
+        <div class="mt-">
+        <br>
+        </div>
+          <div class="mt-5 text-white" style="position:absoute;width:70%;left:40%">
+          <button class="btn btn-primary mr-">作成</button>
+          </div>
+        </div>
+        <div class="mt-5 mb-5" style="font-size:1px">,</div>
+        </div>
+  <div>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static%}
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+
+{% block contents %}
+<div class="k">
+  <div class="mb-">
+    <h1 class='display- text-success alert alert-success text-center'>エクセル入力</h1>
+  </div>
+
+<div class="container" style="margin-top:%">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mt-5 mb-5" style="font-size:1px">,</div>
+    <div class="mt-4 mb-5">{{ form.as_p }}</div>
+    <div class="mr- text-white text-center">
+    <button class="text-center btn btn-primary">提出</button>
+    </div>
+  </form>
+</div>
+</div>
+{% endblock %}

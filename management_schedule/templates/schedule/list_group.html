@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load boost %}
+
+{% block title %}メンバー一覧 | list_member {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+{% block contents %}
+<div class="mb-2">
+  <h5 class='display-5 text-success alert alert-success text-center'>グループ一覧</h5>
+
+
+    <div class="clearfix mr-3" style="font-size:10px">
+        <a class="btn btn-primary float-right" href="{% url 'schedule:create_group' %}"><font size="1">グループ作成</font></a>
+        <a class="btn btn-primary float-right" href="{% url 'schedule:input_excel' %}"><font size="1">エクセル入力</font></a>
+    </div>
+</div>
+
+<div class="container mt-3">
+  {% if group2 %}
+  <div class="clearfix mr-5 mb-2">
+    <h5 class='display- text-white text-center w-70 float-left rounded pt-2 pb-2' style="background-color:#555555">{{owner.last_name}}{{owner.first_name}} (作成者)</h5>
+  </div>
+  {% endif %}
+  <div class="row">
+  {% for group in group2 %}
+  <div class="col-md-6 mb-2">
+    <div class="row pl-3 pr-3">
+    <div class="col-8 text-center pt-4 rounded" style="background-color:#C2EEFF" ><a href="{% url 'schedule:display_member' group.title%}"><h5>{{ group.title }}</h5></a></div>
+    <a class="text-center col-4 btn alert alert-danger btn-sm rounded float-right"  href = '{% url "schedule:comfirm" group.id %}'>削除</a>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  {% if group1 %}
+  <div class="clearfix mr-5 mb-2 mt-3">
+  <h5 class='display-5 text-white text-center w-70 float-left rounded pb-2 pt-2' style="background-color:#555555">{{owner.last_name}}{{owner.first_name}}以外</h5>
+  </div>
+  {% endif %}
+
+  <div class="row">
+  {% for group in group1 %}
+  <div class="col-md-6 mb-5">
+    <div class="row pl-3 pr-3">
+    <div class="col-8 text-center pt-3 rounded" style="background-color:#C2EEFF" ><a href="{% url 'schedule:display_member' group.title%}"><h5>{{ group.title }}</h5></a></div>
+
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+
+
+</div>
+{% endblock %}

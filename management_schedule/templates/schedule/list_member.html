@@ -1,0 +1,44 @@
+{% extends 'base/base_normal.html' %}
+{% load static %}
+{% load boost %}
+
+{% block title %}メンバー一覧 | list_member {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+{% block contents %}
+<div class="mb-2">
+  <h5 class='display- text-success alert alert-success text-center'>メンバー一覧</h5>
+
+
+    <div class="clearfix mt-2 mr- mb-2">
+        <a class="btn btn-primary float-right" href="{% url 'schedule:add_friends' glist %}"><font size="1">友だちの追加</font></a>
+        <a class="btn btn-primary float-right" href = '{% url "schedule:list_group" %}'><font size="1">グループ一覧</font></a>
+        <a class="btn btn-primary float-right" href = '{% url "schedule:select_group" glist %}'><font size="1">月の予定表</font></a>
+    </div>
+    <div class="mr-1 ml-1">
+    <h5 class='display- text-warning alert alert-warning text-center w-70 mx-auto'>{{m}}</h5>
+    </div>
+
+</div>
+
+<div class="container ml- mr-">
+  <div class="row">
+  {% for member in members %}
+  <div class="col-12 mb-">
+    <div class="row pr-1 pl-1">
+    <div class="col-12 text-center pt-3 rounded" style="background-color:#C2EEFF" ><h5>{{member.last_name}}{{member.first_name}}</h5></div>
+    </div>
+    <div class="row ml-1 mr-1 mt-1">
+      <a class=" col-4 btn text-secondary alert alert-secondary btn-sm rounded "  href="{% url 'schedule:select_group' glist member.username %}"><font size="1">月の予定表</font></a>
+      <a class=" col-4 btn text-secondary alert alert-secondary btn-sm rounded mr-4"  href="{% url 'schedule:group_calendar_detail' glist member.username %}"><font size="1">本日の予定</font></a>
+      <a class=" col-3 btn text-danger    alert alert-danger    btn-sm rounded"  href="{% url 'schedule:comfirm_member' glist member.id %}"><font size="1">削除</font></a>
+    </div>
+
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

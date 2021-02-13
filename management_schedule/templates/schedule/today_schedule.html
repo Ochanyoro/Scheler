@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load boost %}
+
+{% block title %}スケジュール一覧 | Today_schedule {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+{% block contents %}
+<div class="container mt-3">
+  <div class="mb-5">
+  <h4>{{date}}</h4>
+
+  <div class="clearfix mb-3">
+      <a class="btn btn-primary float-right" href="{% url 'schedule:create_schedule' date.year date.month date.day %}"><font size="1">新規作成</font></a>
+      <a class="btn btn-primary float-right" href = "{% url 'schedule:select_group' glist users.username %}"><font size="1">月の予定表</font></a>
+  </div>
+  <div class="pt-2 pb-2 text-center"style="background-color:#C2EEFF;"><h5>{{ users.last_name }}{{users.first_name}}</h5></div>
+
+  {% for schedule in schedules_indi %}
+    <div class="row mt-3 mb-3 mr-1 ml-1" style="border-bottom-style:solid;border-color:#999999">
+        <div class="col-4">
+          {% if schedule.summary == "バイト" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/baito.jpg' %}" alt="">
+          {% elif schedule.summary == "仕事" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/work.jpg' %}" alt="">
+          {% elif schedule.summary == "学校" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/school.jpg' %}" alt="">
+          {% elif schedule.summary == "遊び" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/play.jpg' %}" alt="">
+          {% elif schedule.summary == "デート" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/date.jpg' %}" alt="">
+          {% elif schedule.summary == "食事" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/lunch.jpg' %}" alt="">
+          {% elif schedule.summary == "旅行" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/travel.jpg' %}" alt="">
+          {% elif schedule.summary == "飲み会" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/drink.jpg' %}" alt="">
+          {% elif schedule.summary == "買い物" %}
+            <img class="img-fluid rounded-circle" src="{% static 'img/buy.jpg' %}" alt="">
+            {% elif schedule.summary == "A" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/A.png' %}" alt="">
+            {% elif schedule.summary == "B" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/B.png' %}" alt="">
+            {% elif schedule.summary == "C" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/C.png' %}" alt="">
+            {% elif schedule.summary == "D" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/D.png' %}" alt="">
+            {% elif schedule.summary == "E" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/E.png' %}" alt="">
+            {% elif schedule.summary == "F" %}
+              <img class="img-fluid rounded-circle" src="{% static 'img/F.png' %}" alt="">
+
+          {% else%}
+            <img class="img-fluid rounded-circle" src="{% static 'img/01.jpg' %}" alt="">
+          {% endif%}
+        </div>
+        <div class="col-8 mt-2">
+          <div class="row">
+            <div class="col-6 rounded mt-2 mb-5" style="background-color:#FFA07A;text-align:center;padding-top:4%;"><strong><h5>{{ schedule.summary}}</h5></strong></div>
+            <div class="col-6 mt-3"><strong><font size="2">{{ schedule.start_time}}〜{{schedule.end_time}}</font></strong></div>
+            <div class="col-12 mt-" style="overflow:auto;overflow-wrap:break-word;">{{ schedule.description}}</div>
+            <div class="col-2"></div>
+            <div class="col-10" clearfix">
+              {% if user.username == users.username %}
+            <a class="btn alert alert-success btn-sm rounded mt- float-right" style="text-aligh:left" href="{% url 'schedule:edit_schedule' schedule.pk schedule.date.year schedule.date.month schedule.date.day %}"><font size="1">編集</font></a>
+            <a class="btn alert alert-danger btn-sm rounded mt- float-right" href="{% url 'schedule:delete_schedule' schedule.pk schedule.date.year schedule.date.month schedule.date.day %}"><font size="1">削除</font></a>
+            {%endif%}
+            </div>
+
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="mt-3 text-center">
+        <p>本日の予定はありません。</p>
+    </div>
+    {% endfor %}
+
+  </div>
+  </div>
+{% endblock %}

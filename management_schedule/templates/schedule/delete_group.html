@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}グループdelete | Group_Delete {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">-->
+<style>
+  .okk {
+       width: 100%;
+       background: url("{% static 'img/delete_group2.jpg' %}");
+       background-size:120%;
+       background-position:0 25%;
+  }
+
+</style>
+{% endblock %}
+
+{% block contents %}
+
+<div class=" okk">
+<div class="">
+    <div class="mb-">
+      <h5 class='display- text-primary alert alert-primary text-center'>削除グループを選んで</h5>
+    </div>
+    <form action="{% url 'schedule:delete_group' %}" method="post" name="group_form">
+        {% csrf_token %}
+        <div class="mt-5 text-white">'</div>
+        <div class="pr- mr-5 text-right">
+        <div class="mt-5 text-white">.</div>
+        <div class="mt- pt-">
+        <br>
+
+        <h5>{{ delete_group}}</h5>
+        <div class="mt-">
+        <br>
+        </div>
+        <div class="text-center ml-5" style="padding-left:0%">
+        <button type="submit" class="btn btn-primary btn-sm pl- pr-">送信</button>
+        </div>
+        <div>
+        </div>
+        </div>
+
+    </form>
+</div>
+</div>
+{% endblock %}

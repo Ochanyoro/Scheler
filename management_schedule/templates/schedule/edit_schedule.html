@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}スケジュール編集 | Edit Schedule{% endblock %}
+
+{% block contents %}
+<div class="container text-center">
+    <div class="row">
+        <div class="my-div-style w-100">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form%}
+                <div class="form-group row">
+                        <label for="{{ field.id_for_label }}" class="col-3 col-form-label">
+                            <strong>{{ field.label_tag }}</strong>
+                        </label>
+                        <div class="col-9">
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit">更新</button>
+                <a class="btn btn-secondary ml-" href ='{% url "schedule:month_with_schedule" %}'>キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

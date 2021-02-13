@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% load boost %}
+{% block contents %}
+    <style>
+        table {
+            table-layout: fixed;
+        }
+
+        td > div {
+            height: 100px;
+            overflow: auto;
+            white-space: nowrap;
+        }
+        p {
+          font-size:11px;
+        }
+
+      </style>
+    <div class="mr-1 ml-1 mt-2">
+      <div class="clearfix">
+          <font size="3">{{ month_current | date:"y年" }}</font>
+          <a class="btn btn-primary float-right" href = '{% url "schedule:display_member" glist  %}'><font size="1">メンバーを見る</font></a>
+      </div>
+
+      <div style="width:95%">
+      <div class="text-center">
+      {% if users %}
+      <a href="{% url 'schedule:select_group' month_previous.year month_previous.month glist users %}" method="post">前月</a>
+      {%else%}
+      <a href="{% url 'schedule:select_group' month_previous.year month_previous.month glist %}" method="post">前月</a>
+      {% endif %}
+      <font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font size='7'>{{ month_current | date:"m月" }}</font>
+      <font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+      {% if users %}
+      <a href="{% url 'schedule:select_group' month_next.year month_next.month glist users %}" method="post">次月</a>
+      {% else %}
+      <a href="{% url 'schedule:select_group' month_next.year month_next.month glist%}" method="post">次月</a>
+      {% endif %}
+
+      </div>
+      </div>
+      <table class="table">
+      <thead>
+      <tr>
+          {% for w,c in week_names|zip:color %}
+            <th class="{{c}}">{{ w }}</th>
+          {% endfor %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for week_day_schedles in month_day_schedules %}
+          <tr>
+              {% for day, schedules in week_day_schedles.items %}
+                  {% if now == day %}
+                      <td class="table-success">
+                  {% elif forloop.first %}
+                      <td style="background-color:rgba(247,173,195,0.2)">
+                  {% elif forloop.last %}
+                      <td style="background-color:rgba(204,230,255,0.4)">
+                  {% else %}
+                      <td>
+                  {% endif %}
+
+              <div>
+                  {% if month_current.month != day.month %}
+                      {% if name %}
+                      <a href ="{% url 'schedule:group_calendar_detail' day.year day.month day.day glist name%}">{{ day | date:"m/d" }}</a>
+                      {% else %}
+                      <a href ="{% url 'schedule:group_calendar_detail' day.year day.month day.day glist %}">{{ day | date:"m/d" }}</a>
+                      {% endif %}
+                  {% else %}
+                      {% if name %}
+                      <a href ="{% url 'schedule:group_calendar_detail' day.year day.month day.day glist name%}">{{ day | date:"m/d" }}</a>
+                      {% else %}
+                      <a href ="{% url 'schedule:group_calendar_detail' day.year day.month day.day glist%}">{{ day.day }}</a>
+                      {% endif %}
+                  {% endif %}
+
+                  {% for schedule in schedules %}
+                      {% if schedule.summary == 'バイト' %}
+                      <p><div style='background-color:red'><font size="1">{{ schedule.Nickname }}:{{ schedule.summary }}</font></p></div>
+                      {% else %}
+                      <p><font size="1">{{ schedule.Nickname }}:{{ schedule.summary }}</font></p>
+                      {% endif%}
+                  {% endfor %}
+              </div>
+              </td>
+              {% endfor %}
+          </tr>
+      {% endfor %}
+      </tbody>
+      </table>
+      </div>
+{% endblock %}

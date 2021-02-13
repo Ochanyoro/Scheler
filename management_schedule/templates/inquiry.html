@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block title %}お問い合わせ | Scheler{% endblock %}
+
+{% block active_inquiry %}active{% endblock %}
+
+{% block contents %}
+<div class="container text-center">
+    <div class="row">
+        <div class="my-div-style">
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                    <div class="form-group row">
+                        <label for="{{ field.id_for_label }}" class="col-4" >
+                            <strong>{{ field.label_tag }}</strong>
+                        </label>
+                        <div class="col-8" >
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="offset-sm-4 col-sm-8">
+                    <button class="btn btn-primary" type="submit">送信</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

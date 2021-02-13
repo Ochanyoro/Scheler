@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% load boost %}
+{% block contents %}
+
+<div class="mt-5 ml-2 mr-2">
+  <div class="mt-5 mb-3 text-white">'</div>
+<div class="text-center">
+    <a href="{% url 'schedule:week_with_schedule' week_previous.year week_previous.month  week_previous.day %}">前週</a>
+    <font size='3'>{{ week_first | date:"Y年m月d日" }}〜{{ week_last | date:"Y年m月d日" }}</font>
+    <a href="{% url 'schedule:week_with_schedule' week_next.year week_next.month  week_next.day %}">次週</a>
+</div>
+    <table class="table table-bordered" style="table-layout:fixed">
+        <thead>
+        <tr>
+          {% for w,c in week_names|zip:color %}
+            <th class="{{c}}">{{ w }}</th>
+          {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for day in week_days %}
+            {% if forloop.first %}
+                <td style="background-color:rgba(247,173,195,0.2)">
+            {% elif forloop.last %}
+                <td style="background-color:rgba(204,230,255,0.4)">
+            {% else %}
+                <td>
+            {% endif %}
+            {% if week_first.month != day.month %}
+                <a href ="{% url 'schedule:today_schedule' day.year day.month day.day%}">{{ day | date:"m/d" }}</a>
+            {% else %}
+                <a href ="{% url 'schedule:today_schedule' day.year day.month day.day%}">{{ day.day }}</a>
+            {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for schedules in week_day_schedules.values %}
+            {% if forloop.first %}
+                <td style="background-color:rgba(247,173,195,0.2)">
+            {% elif forloop.last %}
+                <td style="background-color:rgba(204,230,255,0.4)">
+            {% else %}
+                <td>
+            {% endif %}
+            <div style="font-size:14px">
+                    {% for s in schedules %}
+                    <div class="mb-3">
+                        {{ s.start_time }} - {{ s.end_time }}<br>
+                        {{ s.summary }}
+                  </div>
+                    {% endfor %}
+            </div>
+                </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+{% endblock %}
